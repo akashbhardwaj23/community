@@ -5,16 +5,15 @@ import { ProfileHeader } from '@/components/profile-header'
 import { UserPosts } from '@/components/user-post'
 
 interface ProfilePageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default async function ProfilePage({ params }: ProfilePageProps) {
-
-
+export default async function ProfilePage({ params } : ProfilePageProps) {
 
     const supabase = await createClient()
+    const id = (await params).id
   
   const {
     data: { session },
@@ -29,14 +28,14 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error || !profile) {
     notFound()
   }
 
-  const isOwnProfile = session.user.id === params.id
+  const isOwnProfile = session.user.id === id
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -45,7 +44,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         <div className="space-y-6">
           <ProfileHeader profile={profile} isOwnProfile={isOwnProfile} />
 
-          <UserPosts userId={params.id} />
+          <UserPosts userId={id} />
         </div>
       </main>
     </div>
