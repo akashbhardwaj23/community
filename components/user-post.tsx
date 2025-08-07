@@ -9,6 +9,8 @@ interface UserPostsProps {
 export async function UserPosts({ userId }: UserPostsProps) {
 
     const supabase = await createClient();
+     const { data: { session } } = await supabase.auth.getSession();
+    const currentUserId = session?.user?.id;
 
   const { data: posts, error } = await supabase
     .from('posts')
@@ -21,6 +23,20 @@ export async function UserPosts({ userId }: UserPostsProps) {
     `)
     .eq('author_id', userId)
     .order('created_at', { ascending: false })
+
+
+
+
+     const { data: likedPostsData, error: likedPostsError } = await supabase
+      .from('post_likes')
+      .select('post_id')
+      .eq('user_id', currentUserId)
+
+    const likedPostIds = new Set(likedPostsData?.map(like => like.post_id));
+
+    if (likedPostsError) {
+      console.error('Error fetching liked posts status:', likedPostsError);
+    }
 
   if (error) {
     console.error('Error fetching user posts:', error)
@@ -40,9 +56,13 @@ export async function UserPosts({ userId }: UserPostsProps) {
 
   return (
    <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-neutral-900">Posts</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900">Posts</h2>
         {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard 
+            key={post.id} 
+            post={post} 
+            initialIsLiked={currentUserId ? likedPostIds.has(post.id) : false}
+          />
         ))}
       </div>
   )

@@ -13,62 +13,62 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Loader2, Save } from 'lucide-react'
 
 interface EditProfileFormProps {
-    profile: {
-        id: string
-        name: string
-        email: string
-        bio: string | null
-    } | null
+  profile: {
+    id: string
+    name: string
+    email: string
+    bio: string | null
+  } | null
 }
 
 export function EditProfileForm({ profile }: EditProfileFormProps) {
-    const [name, setName] = useState(profile?.name || '')
-    const [bio, setBio] = useState(profile?.bio || '')
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
-    const [success, setSuccess] = useState(false)
-    const supabase = createClient();
-    const router = useRouter()
+  const [name, setName] = useState(profile?.name || '')
+  const [bio, setBio] = useState(profile?.bio || '')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const supabase = createClient();
+  const router = useRouter()
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setLoading(true)
-        setError('')
-        setSuccess(false)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    setSuccess(false)
 
-        try {
-            const { error } = await supabase
-                .from('profiles')
-                .update({
-                    name: name.trim(),
-                    bio: bio.trim() || null,
-                })
-                .eq('id', profile?.id)
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          name: name.trim(),
+          bio: bio.trim() || null,
+        })
+        .eq('id', profile?.id)
 
-            if (error) {
-                setError(error.message)
-            } else {
-                setSuccess(true)
-                setTimeout(() => {
-                    router.push(`/profile/${profile?.id}`)
-                    router.refresh()
-                }, 1500)
-            }
-        } catch (err) {
-            setError('An unexpected error occurred')
-        } finally {
-            setLoading(false)
-        }
+      if (error) {
+        setError(error.message)
+      } else {
+        setSuccess(true)
+        setTimeout(() => {
+          router.push(`/profile/${profile?.id}`)
+          router.refresh()
+        }, 1500)
+      }
+    } catch (err) {
+      setError('An unexpected error occurred')
+    } finally {
+      setLoading(false)
     }
+  }
 
-    return (
-         <form onSubmit={handleSubmit} className="space-y-6">
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-      
+
       {success && (
         <Alert className="border-green-200 bg-green-50">
           <AlertDescription className="text-green-800">
@@ -119,23 +119,24 @@ export function EditProfileForm({ profile }: EditProfileFormProps) {
       </div>
 
       <div className="flex space-x-4">
-        <Button type="submit" disabled={loading || !name.trim()}>
+        <Button type="submit" className='px-4 py-2 rounded-[10px] bg-transparent bg-gradient-to-b from-neutral-600 to-neutral-700' disabled={loading || !name.trim()}>
           {loading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" />
               Saving...
             </>
           ) : (
             <>
-              <Save className="mr-2 h-4 w-4" />
+              <Save className="h-4 w-4" />
               Save Changes
             </>
           )}
         </Button>
-        
-        <Button 
-          type="button" 
-          variant="outline" 
+
+        <Button
+          type="button"
+          variant="outline"
+          className='rounded-[10px]'
           onClick={() => router.back()}
           disabled={loading}
         >
@@ -143,5 +144,5 @@ export function EditProfileForm({ profile }: EditProfileFormProps) {
         </Button>
       </div>
     </form>
-    )
+  )
 }

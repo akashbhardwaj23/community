@@ -53,16 +53,16 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16 bg-neutral-100 px-4 py-2 backdrop-blur-2xl shadow rounded-b-[10px]">
+        <div className="flex items-center justify-between h-16 bg-transparent bg-gradient-to-b from-neutral-600 to-neutral-700 px-4 py-2 text-background backdrop-blur-2xl shadow rounded-b-[10px]">
           <div className="flex items-center justify-between space-x-8">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold">
               LinkedIn
             </Link>
             
             <nav className="hidden md:flex items-center justify-center space-x-6">
               <Link 
                 href="/" 
-                className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors"
+                className="flex items-center gap-2 transition-colors"
               >
                 <Home className="h-4 w-4" />
                 <span>Home</span>
@@ -76,14 +76,14 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-blue-100 text-blue-600">
+                      <AvatarFallback className="bg-white text-black">
                         {profile?.name ? getInitials(profile.name) : 'U'}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <div className="flex flex-col space-y-1 p-2">
+                <DropdownMenuContent className="w-56 p-4 rounded-[10px] border-none" align="end" forceMount>
+                  <div className="flex flex-col space-y-1 p-2 mb-4">
                     <p className="text-sm font-medium leading-none">{profile?.name || 'User'}</p>
                     <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                   </div>

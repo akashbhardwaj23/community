@@ -27,7 +27,7 @@ export function ProfileHeader({ profile, isOwnProfile }: ProfileHeaderProps) {
   }
 
   return (
-     <Card className="shadow-sm">
+     <Card className="shadow-lg hover:shadow-xl border-none rounded-[10px]">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-4">

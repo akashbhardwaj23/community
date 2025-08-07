@@ -1,9 +1,14 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { formatDistanceToNow } from 'date-fns'
-import { Button } from './ui/button'
-import { Globe, Heart, MessageCircle, MoreHorizontal, Repeat2, Send } from 'lucide-react'
+import { Heart, MessageCircle, Repeat2, Send, MoreHorizontal, Globe, Loader2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface PostCardProps {
   post: {
@@ -11,14 +16,73 @@ interface PostCardProps {
     content: string
     created_at: string
     author_id: string
+    likes_count: number
     profiles: {
       name: string
       bio: string | null
     } | null
   }
+  initialIsLiked: boolean;
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, initialIsLiked }: PostCardProps) {
+  const [isLiked, setIsLiked] = useState(initialIsLiked)
+  const [likesCount, setLikesCount] = useState(post.likes_count)
+  const [isLoadingLike, setIsLoadingLike] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setUser(session?.user || null)
+    }
+    getUser()
+  }, [supabase])
+
+  const handleLike = async () => {
+    if (!user || isLoadingLike) return
+
+    setIsLoadingLike(true)
+
+    try {
+      if (isLiked) {
+        // Unlike the post
+        const { error } = await supabase
+          .from('post_likes')
+          .delete()
+          .eq('post_id', post.id)
+          .eq('user_id', user.id)
+
+        if (!error) {
+          setIsLiked(false)
+          setLikesCount(prev => Math.max(0, prev - 1))
+        } else {
+          console.error('Error unliking post:', error);
+        }
+      } else {
+        // Like the post
+        const { error } = await supabase
+          .from('post_likes')
+          .insert({
+            post_id: post.id,
+            user_id: user.id
+          })
+
+        if (!error) {
+          setIsLiked(true)
+          setLikesCount(prev => prev + 1)
+        } else {
+          console.error('Error liking post:', error);
+        }
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred toggling like:', error)
+    } finally {
+      setIsLoadingLike(false)
+    }
+  }
+
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -37,7 +101,7 @@ export function PostCard({ post }: PostCardProps) {
   }
 
   return (
-      <Card className="shadow-sm hover:shadow-md transition-all duration-200 border-0 bg-white">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-200 border-0 p-0 px-4 py-8 rounded-[10px]">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
@@ -50,23 +114,25 @@ export function PostCard({ post }: PostCardProps) {
               <div className="flex items-center space-x-2">
                 <Link 
                   href={`/profile/${post.author_id}`}
-                  className="font-semibold text-gray-900 hover:text-blue-600 transition-colors"
+                  className="font-semibold text-neutral-900 mt-2 hover:text-blue-600 transition-colors"
                 >
                   {post.profiles?.name || 'Unknown User'}
                 </Link>
-                <span className="text-gray-400">•</span>
-                <span className="text-sm text-gray-500">
+                <span className="text-neutral-400 mt-2">•</span>
+                <span className="text-sm text-neutral-600 mt-2">
                   {formatDate(post.created_at)}
                 </span>
               </div>
+               <div className="flex items-center space-x-2">
               {post.profiles?.bio && (
-                <p className="text-sm text-gray-600 mt-1 line-clamp-1">
+                <p className="text-sm text-neutral-600 line-clamp-1">
                   {post.profiles.bio}
                 </p>
               )}
-              <div className="flex items-center space-x-1 mt-1">
-                <Globe className="h-3 w-3 text-gray-400" />
-                <span className="text-xs text-gray-500">Public</span>
+              <div className='flex justify-center items-center mt-1 space-x-1'>
+                <Globe className="h-3 w-3 text-neutral-400" />
+                <span className="text-xs text-neutral-500">Public</span>
+                </div>
               </div>
             </div>
           </div>
@@ -81,15 +147,46 @@ export function PostCard({ post }: PostCardProps) {
           {post.content}
         </div>
         
+
+{/* 
+        {likesCount > 0 && (
+          <div className="flex items-center space-x-2 text-sm text-gray-600 pb-2">
+            <div className="flex items-center space-x-1">
+              <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs">❤</span>
+              </div>
+              <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
+            </div>
+          </div>
+        )} */}
+    
         <div className="flex items-center justify-between pt-3 border-t border-gray-100">
           <div className="flex items-center space-x-1">
-            <Button
+            <Button 
               variant="ghost" 
               size="sm" 
-              className="text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-full px-3 py-2 transition-all duration-200"
+              onClick={handleLike}
+              disabled={!user || isLoadingLike}
+              className={cn(
+                "transition-all duration-200 rounded-full px-3 py-2 group",
+                isLiked 
+                  ? "text-red-600 hover:text-red-700 hover:bg-red-50 bg-red-50/50" 
+                  : "text-gray-600 hover:text-red-600 hover:bg-red-50",
+              )}
             >
-              <Heart className="h-4 w-4 mr-2" />
-              <span className="text-sm font-medium">Like</span>
+              {isLoadingLike ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Heart 
+                  className={cn(
+                    "h-4 w-4 mr-2 transition-all duration-200",
+                    isLiked ? "fill-red-600 stroke-red-600 scale-110" : "stroke-gray-600 group-hover:stroke-red-600 group-hover:scale-110"
+                  )} 
+                />
+              )}
+              <span className="text-sm font-medium">
+                {likesCount > 0 ? `${likesCount}` : 'Like'}
+              </span>
             </Button>
             <Button 
               variant="ghost" 

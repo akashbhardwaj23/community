@@ -96,7 +96,7 @@ export function CreatePost() {
     }
 
     return (
-        <Card className="shadow-sm border-0 bg-white">
+        <Card className="shadow-xl border-0 rounded-[10px]">
             <CardContent className="p-0">
                 {error && (
                     <div className="p-4 pb-0">
@@ -123,15 +123,15 @@ export function CreatePost() {
                                     onChange={(e) => setContent(e.target.value)}
                                     onFocus={handleTextareaFocus}
                                     className={cn(
-                                        "min-h-[60px] resize-none border-0 p-4 text-base placeholder:text-gray-500 focus-visible:ring-0 bg-gray-50 rounded-xl transition-all duration-200",
-                                        isExpanded && "min-h-[120px] bg-white border border-gray-200 shadow-sm"
+                                        "min-h-[60px] resize-none border-0 p-4 text-base placeholder:text-neutral-500 focus-visible:ring-0 bg-neutral-100 rounded-xl transition-all duration-200",
+                                        isExpanded && "min-h-[120px] bg-white border border-neutrall-200 shadow-sm"
                                     )}
                                     disabled={loading}
                                     maxLength={2000}
                                 />
 
                                 {isExpanded && (
-                                    <div className="absolute bottom-3 right-3 text-xs text-gray-400 bg-white px-2 py-1 rounded-full">
+                                    <div className="absolute bottom-3 right-3 text-xs text-neutral-400 bg-white px-2 py-1 rounded-full">
                                         {content.length}/2000
                                     </div>
                                 )}

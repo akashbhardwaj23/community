@@ -1,4 +1,3 @@
--- *** IMPORTANT: The line below is intentionally commented out. Supabase manages RLS on auth.users internally. ***
 -- ALTER TABLE auth.users ENABLE ROW LEVEL SECURITY;
 
 -- 1. Create profiles table
