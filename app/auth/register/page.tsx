@@ -56,7 +56,7 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-        <Card className="w-full max-w-md shadow-lg">
+        <Card className="w-full max-w-2xl shadow-lg">
           <CardContent className="pt-6">
             <div className="text-center">
               <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
@@ -75,9 +75,9 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-md shadow-lg">
+      <Card className="w-full max-w-2xl shadow-lg">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create account</CardTitle>
+          <CardTitle className="text-4xl font-bold text-center">Create account</CardTitle>
           <CardDescription className="text-center">
             Join our professional community
           </CardDescription>
@@ -130,7 +130,7 @@ export default function RegisterPage() {
               />
             </div>
             
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full px-4 py-2 bg-transparent bg-gradient-to-b from-neutral-600 to-neutral-700" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

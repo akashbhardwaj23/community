@@ -45,9 +45,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-md shadow-lg">
+      <Card className="w-full max-w-2xl h-96 shadow-lg">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Welcome back</CardTitle>
+          <CardTitle className="text-4xl font-bold text-center">Welcome back</CardTitle>
           <CardDescription className="text-center">
             Sign in to your account to continue
           </CardDescription>
@@ -70,6 +70,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
+                className='px-4 py-2 focus:outline-none'
               />
             </div>
             
@@ -86,7 +87,7 @@ export default function LoginPage() {
               />
             </div>
             
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full px-4 py-2 rounded-[10px] bg-transparent bg-gradient-to-b from-neutral-600 to-neutral-700" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -101,7 +102,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
-              <Link href="/auth/register" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link href="/auth/register" className="font-medium text-sky-400 hover:text-blue-500">
                 Sign up
               </Link>
             </p>
