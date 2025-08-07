@@ -17,7 +17,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-ibmplexmono">
+    <div className="min-h-screen bg-neutral-50 font-mono">
       <Header />
       <main className="max-w-2xl mx-auto px-4 py-8">
         <div className="space-y-6">

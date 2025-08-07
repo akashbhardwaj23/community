@@ -65,7 +65,7 @@ export default function RegisterPage() {
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-neutral-900 mb-2">Account created successfully!</h3>
-              <p className='mb-4'>Verify the Mail on your mail</p>
+              <p className='mb-4'>Verify the email from your mail</p>
               <p className="text-sm text-neutral-600">Redirecting you to the platform...</p>
             </div>
           </CardContent>
