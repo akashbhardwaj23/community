@@ -26,8 +26,6 @@ export default function RegisterPage() {
     setLoading(true)
     setError('')
 
-
-
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
