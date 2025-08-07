@@ -29,18 +29,21 @@ export async function UserPosts({ userId }: UserPostsProps) {
 
   if (!posts || posts.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-gray-500">No posts yet.</p>
-      </div>
+      <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-neutral-900">Posts</h2>
+          <div className="text-center py-12">
+            <p className="text-gray-500">No posts yet.</p>
+          </div>
+        </div>
     )
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-900">Posts</h2>
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
-    </div>
+   <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-neutral-900">Posts</h2>
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
   )
 }

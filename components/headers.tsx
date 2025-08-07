@@ -22,7 +22,6 @@ export function Header() {
       if (session?.user) {
         setUser(session.user)
         
-        // Get profile data
         const { data: profileData } = await supabase
           .from('profiles')
           .select('*')
@@ -52,18 +51,18 @@ export function Header() {
   }
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="text-xl font-bold text-blue-600">
-              ConnectPro
+        <div className="flex items-center justify-between h-16 bg-neutral-100 px-4 py-2 backdrop-blur-2xl shadow rounded-b-[10px]">
+          <div className="flex items-center justify-between space-x-8">
+            <Link href="/" className="text-2xl font-bold text-blue-600">
+              LinkedIn
             </Link>
             
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center justify-center space-x-6">
               <Link 
                 href="/" 
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors"
               >
                 <Home className="h-4 w-4" />
                 <span>Home</span>

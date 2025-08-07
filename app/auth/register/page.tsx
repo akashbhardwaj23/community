@@ -64,8 +64,9 @@ export default function RegisterPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Account created successfully!</h3>
-              <p className="text-sm text-gray-600">Redirecting you to the platform...</p>
+              <h3 className="text-lg font-medium text-neutral-900 mb-2">Account created successfully!</h3>
+              <p className='mb-4'>Verify the Mail on your mail</p>
+              <p className="text-sm text-neutral-600">Redirecting you to the platform...</p>
             </div>
           </CardContent>
         </Card>
@@ -75,7 +76,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-2xl shadow-lg">
+      <Card className="w-full max-w-2xl shadow-lg p-4 py-8 rounded-[20px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-4xl font-bold text-center">Create account</CardTitle>
           <CardDescription className="text-center">
