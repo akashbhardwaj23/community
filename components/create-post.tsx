@@ -122,7 +122,7 @@ export function CreatePost() {
                                     onFocus={handleTextareaFocus}
                                     className={cn(
                                         "min-h-[60px] resize-none border-0 p-4 text-base placeholder:text-neutral-500 focus-visible:ring-0 bg-neutral-100 rounded-xl transition-all duration-200",
-                                        isExpanded && "min-h-[120px] bg-white border border-neutrall-200 shadow-sm"
+                                        isExpanded && "min-h-[120px] bg-white border border-neutral-200 shadow-sm"
                                     )}
                                     disabled={loading}
                                     maxLength={2000}
