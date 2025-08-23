@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/server'
-import { cookies } from 'next/headers'
 import { PostCard } from '@/components/post-card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Database, AlertCircle } from 'lucide-react'

@@ -1,13 +1,11 @@
 
 'use client'
 
-
-
 import { useState } from 'react'
 import { createClient } from "@/lib/supabase/client"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { AlertCircle, Calendar, Globe, Image, Loader2, Send, Smile, Users, Video } from 'lucide-react'
 import { useRouter } from 'next/navigation'

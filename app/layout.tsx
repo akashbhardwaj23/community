@@ -19,8 +19,8 @@ const ibmplexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Linkedin",
-  description: "LinkedIn type Application with features",
+  title: "Community",
+  description: "A small Community App for Developers",
 };
 
 export default function RootLayout({
